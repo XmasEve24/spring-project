@@ -2,13 +2,13 @@ package com.test.app.board;
 
 import java.util.List;
 
-import com.test.app.board.impl.BoardDAO3;
+import com.test.app.board.impl.BoardDAO;
 
 public class BoardClient {
 
 	public static void main(String[] args) {
 		
-		BoardDAO3 dao = new BoardDAO3();
+		BoardDAO dao = new BoardDAO();
 		
 		BoardVO vo = new BoardVO();
 		vo.setContent("내용");

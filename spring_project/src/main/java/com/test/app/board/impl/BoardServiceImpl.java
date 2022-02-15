@@ -11,7 +11,7 @@ import com.test.app.board.BoardVO;
 @Service("boardService")
 public class BoardServiceImpl implements BoardService{
 	@Autowired
-	private BoardDAO3 boardDAO;
+	private BoardDAO boardDAO;
 	
 	@Override
 	public void insertBoard(BoardVO vo) {

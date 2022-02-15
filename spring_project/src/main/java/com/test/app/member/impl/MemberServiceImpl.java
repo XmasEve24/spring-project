@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.test.app.board.BoardVO;
-import com.test.app.board.impl.BoardDAO3;
+import com.test.app.board.impl.BoardDAO;
 import com.test.app.member.MemberService;
 import com.test.app.member.MemberVO;
 
@@ -12,9 +12,9 @@ import com.test.app.member.MemberVO;
 public class MemberServiceImpl implements MemberService {
 
 	@Autowired
-	private MemberDAO2 memberDAO;
+	private MemberDAO memberDAO;
 	@Autowired
-	private BoardDAO3 boardDAO;
+	private BoardDAO boardDAO;
 	/*
 	 * public MemberDAO getMemberDAO() { return memberDAO; } public void
 	 * setMemberDAO(MemberDAO memberDAO) { this.memberDAO = memberDAO; }

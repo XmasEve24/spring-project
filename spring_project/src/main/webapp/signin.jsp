@@ -35,25 +35,21 @@ div.box {
 		 
 		 <span> ID </span>
 		<div>
-			<input type="text" name="memberId" id="memberId"> <span></span>
+			<input type="text" name="mid" id="memberId"> <span></span>
 			<span class="error_next_box"></span>
 		</div>
-		<font name="checkId" size="2"></font> <span> Email Address </span>
-		<div data-validate="EmailAddress is required">
-			<input type="email" name="memberEmail" id="memberEmail"> <span></span>
-			<span class="error_next_box"></span>
-		</div>
+		<font name="checkId" size="2"></font> 
 
 		<span> Username </span>
 		<div>
-			<input class="" type="text" name="memberName" id="memberName">
+			<input class="" type="text" name="name" id="memberName">
 			<span class="focus-input100"></span> <span class="error_next_box"></span>
 		</div>
 
 		<span> Password </span>
 		<div data-validate="Password is required">
 			<span class=""> </span> <input class="" type="password"
-				name="memberPw" id="memberPw"> <span class="focus-input100"></span>
+				name="password" id="memberPw"> <span class="focus-input100"></span>
 			<span class="error_next_box"></span>
 		</div>
 
@@ -69,7 +65,7 @@ div.box {
 		<br>
 		<br>
 		<div>
-			<input style="float: right;" type="submit" onclick = "checkValue();" value="회원가입">
+			<input style="float: right;" type="submit" value="회원가입">
 			<a href="index.jsp" class="button">처음화면으로</a>
 		</div>
 		</div>

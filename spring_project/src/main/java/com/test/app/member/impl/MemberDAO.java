@@ -1,76 +1,52 @@
 package com.test.app.member.impl;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
-import com.test.app.common.JDBCUtil;
+import com.test.app.board.BoardVO;
 import com.test.app.member.MemberVO;
 
-
+@Repository("memberDAO")
 public class MemberDAO {
-	private Connection conn=null;
-	private PreparedStatement pstmt=null;
-	private ResultSet rs=null;
 	
-	private String member_insert="insert into memberS values(?,?,?,?)";
-	private String member_selectOne="select * from memberS where mid=? and password=?";
-	private String member_update="update memberS set password=?,name=? where mid=?";
+	@Autowired
+	private JdbcTemplate jdbcTemplate;
 
-	public void updateMemeber(MemberVO vo) {
-		conn=JDBCUtil.connect();
-		try {
-			pstmt=conn.prepareStatement(member_update);
-			pstmt.setString(1, vo.getPassword());
-			pstmt.setString(2, vo.getName());
-			pstmt.setString(3, vo.getMid());
-			pstmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			JDBCUtil.disconnect(pstmt, conn);
-		}
+	private String member_selectOne = "select * from memberS where mid=? and password=?";
+	private String member_insert="insert into memberS(mid,password,name,role) values(?,?,?,?)";
+	private String member_update="update memberS set password=?,name=? where mid=?";
+	
+	public MemberVO selectOne(MemberVO vo){
+		System.out.println("과제 풀이 완료");
+		Object[] obj = { vo.getMid(),vo.getPassword() };
+		return jdbcTemplate.queryForObject(member_selectOne, obj, new MemberRowMapper());
 	}
 	
-	public void insertMemeber(MemberVO vo) {
-		conn=JDBCUtil.connect();
-		try {
-			pstmt=conn.prepareStatement(member_insert);
-			pstmt.setString(1, vo.getMid());
-			pstmt.setString(2, vo.getPassword());
-			pstmt.setString(3, vo.getName());
-			pstmt.setString(4, vo.getRole());
-			pstmt.executeUpdate();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			JDBCUtil.disconnect(pstmt, conn);
-		}
+	public void insertMember(MemberVO vo) {
+		System.out.println("회원가입");
+		jdbcTemplate.update(member_insert, vo.getMid(), vo.getPassword(), vo.getName(), vo.getRole());
 	}
 	
-	public MemberVO selectOne(MemberVO vo) {
-		MemberVO data=null;
-		conn=JDBCUtil.connect();
-		try {
-			pstmt=conn.prepareStatement(member_selectOne);
-			pstmt.setString(1, vo.getMid());
-			pstmt.setString(2, vo.getPassword());
-			rs=pstmt.executeQuery();
-			if(rs.next()) {
-				data=new MemberVO();
-				data.setMid(rs.getString("mid"));
-				data.setName(rs.getString("name"));
-				data.setPassword(rs.getString("password"));
-				data.setRole(rs.getString("role"));
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		} finally {
-			JDBCUtil.disconnect(rs, pstmt, conn);
-		}	
+	public void updateMember(MemberVO vo) {
+		System.out.println("updateMember");
+		jdbcTemplate.update(member_update,vo.getPassword(),vo.getName(),vo.getMid());
+	}
+}
+class MemberRowMapper implements RowMapper<MemberVO> {
+
+	@Override
+	public MemberVO mapRow(ResultSet rs, int rowNum) throws SQLException {
+		MemberVO data = new MemberVO();
+		data.setMid(rs.getString("mid"));
+		data.setName(rs.getString("name"));
+		data.setPassword(rs.getString("password"));
+		data.setRole(rs.getString("role"));
 		return data;
 	}
+
 }
